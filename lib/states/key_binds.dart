@@ -17,13 +17,31 @@ registerKeys() async {
   await simpleKey(KeyCode.keyD, () => changeAlign(1));
 
   // non-combinations
-  await simpleKey(KeyCode.keyE, () => cycleMode());
+  await simpleKey(KeyCode.keyE, () => cycleMode(1));
+  await simpleKey(KeyCode.keyQ, () => cycleMode(-1));
   await simpleKey(KeyCode.keyT, () => goTo('lyrics'));
   await simpleKey(KeyCode.keyC, () => goTo('color'));
   await simpleKey(KeyCode.keyF, () => goTo('font'));
 
-  await simpleKey(KeyCode.keyS, () => saveSizeAndPosition(),
-      listModifiers: [KeyModifier.control]);
+  await simpleKey(KeyCode.keyS, () {
+    if (mode.value != 1) {
+      return;
+    }
+    Get.snackbar('Saved', '',
+        duration: 3000.milliseconds,
+        animationDuration: 400.milliseconds,
+        backgroundColor: Colors.transparent,
+        overlayColor: Colors.transparent,
+        barBlur: 0,
+        overlayBlur: 0,
+        snackStyle: SnackStyle.FLOATING,
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: const Text(
+          'Saved position + size',
+          style: TextStyle(fontSize: 16),
+          textAlign: TextAlign.center,
+        ));
+  }, listModifiers: [KeyModifier.control]);
   await simpleKey(KeyCode.keyE, () => getSavedSizeAndPosition(),
       listModifiers: [KeyModifier.control]);
 }

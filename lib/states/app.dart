@@ -1,6 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lyrxer/states/config.dart';
 import 'package:window_manager/window_manager.dart';
 
 // --------- AppState --------- //
@@ -8,8 +9,21 @@ import 'package:window_manager/window_manager.dart';
 RxBool isReady = false.obs;
 Rx<ThemeMode> theme = ThemeMode.light.obs;
 
+RxBool transition = false.obs;
+Duration pageTransition = 400.milliseconds;
+
+void inTransition() async {
+  await Future.delayed(400.milliseconds);
+  transition.value = true;
+}
+
+void outTransition() async {
+  transition.value = false;
+}
+
 //Window
-Rx<Size> size = const Size(320, 320).obs;
+Size defaultSize = const Size(320, 320);
+Rx<Size> size = defaultSize.obs;
 Rx<Offset> position = const Offset(0, 0).obs;
 RxDouble h = 0.0.obs;
 RxDouble w = 0.0.obs;
@@ -28,12 +42,20 @@ void getSavedSizeAndPosition() async {
 Map modeTypes = {1: 'lyrics', 2: 'color', 3: 'font'};
 RxInt mode = 0.obs;
 
-void cycleMode() async {
-  if (mode.value == modeTypes.length) {
+void cycleMode(int direction) async {
+  if (direction != -1 && direction != 1) {
+    return;
+  }
+  if (mode.value == modeTypes.length && direction > 0) {
     mode.value = 0;
   }
-  mode.value++;
+  if (mode.value == 1 && direction < 0) {
+    mode.value = modeTypes.length + 1;
+  }
+  mode.value += direction;
   MapEntry a = modeTypes.entries.firstWhere((e) => e.key == mode.value);
+  outTransition();
+  await Future.delayed(500.milliseconds);
   Get.offAndToNamed('/${a.value}');
-  await updateConfig();
+  // await updateConfig();
 }

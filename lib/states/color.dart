@@ -18,10 +18,10 @@ isColorDark(Color myColor) {
 
   double grayscale = (0.299 * r) + (0.587 * g) + (0.114 * b);
   if (grayscale > 160) {
-    theme.value = ThemeMode.light;
+    Get.changeThemeMode(ThemeMode.light);
     return false;
   } else {
-    theme.value = ThemeMode.dark;
+    Get.changeThemeMode(ThemeMode.dark);
     return true;
   }
 }

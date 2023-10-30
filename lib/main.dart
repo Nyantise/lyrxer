@@ -1,4 +1,3 @@
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,20 +40,18 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => GetMaterialApp(
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
-        themeMode: theme.value,
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        getPages: appRoutes(),
-        builder: (context, child) {
-          return GlobalWindow(
-            child: child!,
-          );
-        },
-      ),
+    return GetMaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: theme.value,
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      getPages: appRoutes(),
+      builder: (context, child) {
+        return GlobalWindow(
+          child: child!,
+        );
+      },
     );
   }
 }
@@ -94,7 +91,7 @@ class GlobalWindow extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: Center(
           child: AnimatedContainer(
-              duration: 140.milliseconds,
+              duration: 300.milliseconds,
               curve: Curves.easeOut,
               decoration: BoxDecoration(
                   color: stayFocused.value

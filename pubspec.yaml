@@ -37,6 +37,7 @@ dependencies:
   
   bitsdojo_window: ^0.1.5
   window_manager: ^0.3.7
+  screen_retriever: ^0.1.9
   google_fonts: ^6.1.0
   flex_color_picker: ^3.3.0
   

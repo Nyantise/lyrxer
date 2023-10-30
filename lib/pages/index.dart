@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/main.dart';
 import 'package:lyrxer/pages/color_picker.dart';
+import 'package:lyrxer/pages/fonts.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/pages/lyrxer.dart';
 
@@ -19,28 +20,18 @@ appRoutes() => [
             child: lyrxer(),
           )
         ]),
-        transition: Transition.fade,
-        transitionDuration: 500.milliseconds,
-        curve: Curves.easeOut,
+        transition: Transition.noTransition,
       ),
       GetPage(
         name: '/color',
         page: () => const Center(
           child: MyColorPicker(),
         ),
-        transition: Transition.fade,
-        transitionDuration: 500.milliseconds,
-        curve: Curves.easeOut,
+        transition: Transition.noTransition,
       ),
       GetPage(
         name: '/font',
-        page: () => Center(
-            child: Text(
-          modeTypes[3],
-          style: const TextStyle(color: Colors.white),
-        )),
-        transition: Transition.fade,
-        transitionDuration: 500.milliseconds,
-        curve: Curves.easeOut,
+        page: () => const Center(child: MyFontsPicker()),
+        transition: Transition.noTransition,
       ),
     ];
