@@ -1,11 +1,8 @@
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/color.dart';
-import 'package:lyrxer/states/config.dart';
 import 'package:screen_retriever/screen_retriever.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -26,7 +23,6 @@ class MyColorPicker extends StatelessWidget {
               onColorChanged: (Color color) {
                 backgroundColor.value = color.value;
                 isColorDark(color);
-                updateConfig();
               },
               enableOpacity: true,
               pickersEnabled: const {

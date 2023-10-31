@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
-import 'package:lyrxer/states/key_binds.dart';
 
 //
 //

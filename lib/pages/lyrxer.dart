@@ -1,4 +1,3 @@
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
@@ -31,14 +30,14 @@ class _lyrxerState extends State<lyrxer> with WindowListener {
   @override
   void onWindowResize() {
     if (mode.value == 1) {
-      saveSizeAndPosition();
+      watchSizeAndPosition();
     }
   }
 
   @override
   void onWindowMove() {
     if (mode.value == 1) {
-      saveSizeAndPosition();
+      watchSizeAndPosition();
     }
   }
 

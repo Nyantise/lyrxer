@@ -9,7 +9,7 @@ import 'package:lyrxer/pages/lyrxer.dart';
 appRoutes() => [
       GetPage(name: '/', page: () => const Hello()),
       GetPage(
-        name: '/lyrics',
+        name: '/Display',
         page: () =>
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(
@@ -23,14 +23,14 @@ appRoutes() => [
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: '/color',
+        name: '/Color',
         page: () => const Center(
           child: MyColorPicker(),
         ),
         transition: Transition.noTransition,
       ),
       GetPage(
-        name: '/font',
+        name: '/Font',
         page: () => const Center(child: MyFontsPicker()),
         transition: Transition.noTransition,
       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lyrxer/states/color.dart';
-import 'package:lyrxer/states/config.dart';
 
 //
 //
@@ -35,13 +34,11 @@ void changeAlign(int val) async {
   }
   alignState += val;
   textAlign.value = textAlignTypes[alignState];
-  await updateConfig();
 }
 
 void changeSize(int val) async {
   textSize.value += val;
   updateTextStyle();
-  await updateConfig();
 }
 
 List fontList = [

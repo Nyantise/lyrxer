@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/config.dart';
-import 'package:lyrxer/states/key_binds.dart';
 import 'package:process_run/shell_run.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_writer/yaml_writer.dart';
@@ -40,13 +39,16 @@ getConfig() async {
     String yamlString = await configFile.readAsString();
     Map yaml = await loadYaml(yamlString);
     fromYaml(yaml);
+    fromYaml(yaml);
     await Future.delayed(2500.milliseconds);
+    fromYaml(yaml);
     isReady.value = true;
-    goTo('lyrics');
+    goTo('Display');
     initWatchingFile();
   } catch (e) {
     if (e.toString().contains('PathNotFoundException')) {
       yamlWrite(configFile, toJson());
+      getConfig();
     }
   }
 }
