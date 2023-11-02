@@ -132,7 +132,8 @@ void setWindow() async {
   }
   await windowManager.setMinimumSize(const Size(450, 280));
   await windowManager.setMaximumSize(device.size);
-  await windowManager.setSize(size.value);
+  await windowManager.setSize(size.value, animate: true);
+  await Future.delayed(100.milliseconds);
 
-  await windowManager.setPosition(position.value);
+  await windowManager.setPosition(position.value, animate: true);
 }

@@ -2,20 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:lyrxer/states/app.dart';
+import 'package:lyrxer/states/color.dart';
 import 'package:lyrxer/states/config.dart';
 import 'package:lyrxer/states/text.dart';
 
 //Register all Keys
 registerKeys() async {
   // directional
-  await simpleKey(KeyCode.arrowUp, () => changeSize(2));
-  await simpleKey(KeyCode.arrowDown, () => changeSize(-2));
-  await simpleKey(KeyCode.arrowLeft, () => changeAlign(-1));
-  await simpleKey(KeyCode.arrowRight, () => changeAlign(1));
   await simpleKey(KeyCode.keyW, () => changeSize(2));
   await simpleKey(KeyCode.keyS, () => changeSize(-2));
-  await simpleKey(KeyCode.keyA, () => changeAlign(-1));
-  await simpleKey(KeyCode.keyD, () => changeAlign(1));
+  await simpleKey(KeyCode.keyA, () {
+    if (mode.value == 1) {
+      changeAlign(-1);
+    }
+    if (mode.value == 2) {
+      cycleColor(-1);
+    }
+  });
+  await simpleKey(KeyCode.keyD, () {
+    if (mode.value == 1) {
+      changeAlign(1);
+    }
+    if (mode.value == 2) {
+      cycleColor(1);
+    }
+  });
 
   // non-combinations
   await simpleKey(KeyCode.keyE, () => cycleMode(1));

@@ -137,7 +137,7 @@ Obx topBar() => Obx(() {
                 Icons.help,
                 size: 21,
               ),
-              Text('     ', style: appTextStyle.value),
+              Text(' help', style: appTextStyle.value),
             ],
           ),
           Row(
@@ -154,11 +154,11 @@ Obx topBar() => Obx(() {
               ),
               SizedBox(
                 height: 24,
-                width: 140,
+                width: 90,
                 child: CarouselSlider(
                     items: modeTypes.entries.map((e) {
                       return Text(
-                        '${e.value} Mode',
+                        '${e.value.toString().toUpperCase()}',
                         style: appTextStyle.value,
                       );
                     }).toList(),
@@ -178,7 +178,7 @@ Obx topBar() => Obx(() {
                 color: Get.isDarkMode ? Colors.white : Colors.black,
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 4.0),
+                padding: EdgeInsets.only(left: 5.0),
                 child: Icon(
                   Icons.arrow_forward_ios,
                   size: 21,

@@ -15,7 +15,7 @@ void switchFocus() {
   stayFocused.value = !stayFocused.value;
   if (!stayFocused.value) {
     saveLastMode = mode.value;
-    goTo('lyrics');
+    goTo('Display');
   } else {
     MapEntry a = modeTypes.entries.firstWhere((e) => e.key == saveLastMode);
     goTo(a.value);

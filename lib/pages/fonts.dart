@@ -28,9 +28,9 @@ void setWindow() async {
   appWindow.size = (size);
   await windowManager.setMinimumSize(size);
   await windowManager.setMaximumSize(size);
-  await windowManager.setSize(size);
+  await windowManager.setSize(size, animate: true);
 
   double offX = (device.size.width - size.width) / 2;
   // double offY =
-  await windowManager.setPosition(Offset(offX, 32));
+  await windowManager.setPosition(Offset(offX, 32), animate: true);
 }

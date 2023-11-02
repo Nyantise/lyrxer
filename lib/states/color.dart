@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,4 +24,23 @@ isColorDark(Color myColor) {
     Get.changeThemeMode(ThemeMode.dark);
     return true;
   }
+}
+
+Map colorTypes = {1: 'background', 2: 'outline', 3: 'display font'};
+RxInt colorMode = 1.obs;
+CarouselController colorCarousel = CarouselController();
+
+void cycleColor(int direction) async {
+  if (direction != -1 && direction != 1) {
+    return;
+  }
+  if (colorMode.value == colorTypes.length && direction > 0) {
+    colorMode.value = 0;
+  }
+  if (colorMode.value == 1 && direction < 0) {
+    colorMode.value = colorTypes.length + 1;
+  }
+  colorMode.value += direction;
+  colorCarousel.animateToPage(colorMode.value - 1,
+      curve: Curves.elasticOut, duration: 700.milliseconds);
 }
