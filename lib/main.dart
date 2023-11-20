@@ -1,8 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lyrxer/components/topbar.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/color.dart';
 import 'package:lyrxer/states/focus.dart';
@@ -11,6 +10,7 @@ import 'package:lyrxer/states/text.dart';
 import 'package:lyrxer/states/file_watcher.dart';
 import 'package:lyrxer/pages/index.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:screen_retriever/screen_retriever.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -32,9 +32,14 @@ Future<void> main() async {
   // For hot reload, `unregisterAll()` needs to be called.
   await hotKeyManager.unregisterAll();
   runApp(const MyApp());
+
   await getConfig();
   Future.delayed(5000.milliseconds);
-  await windowManager.setSize(const Size(600, 400));
+
+  device = await screenRetriever.getPrimaryDisplay();
+  h.value = device.size.height / 100; //Look Later
+  w.value = device.size.width / 100; //Look Later
+  await windowManager.setSize(device.size);
   await registerKeys();
 }
 
@@ -84,117 +89,30 @@ class GlobalWindow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    h.value = size.height / 100;
-    w.value = size.width / 100;
-    return MouseCatcher(
-        child: Obx(
-      () => Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: AnimatedContainer(
-              duration: 300.milliseconds,
-              curve: Curves.easeOut,
-              decoration: BoxDecoration(
-                  color: stayFocused.value
-                      ? Color(backgroundColor.value)
-                      : Colors.transparent,
-                  border: Border.all(
-                    color: hover.value
-                        ? Color(subcolor.value)
-                        : Colors.transparent,
-                  )),
-              width: isReady.isFalse ? 320 : 100 * w.value,
-              height: isReady.isFalse ? 320 : 100 * h.value,
-              child: Stack(
-                children: [
-                  child,
-                  Positioned(
-                    top: 5 * h.value,
-                    right: 5 * w.value,
-                    left: 5 * w.value,
-                    child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeIn,
-                        opacity: stayFocused.value ? 1 : 0,
-                        child: mode.value != 0 ? topBar() : const SizedBox()),
-                  ),
-                ],
-              )),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        color: Colors.transparent,
+        width: w.value * 100, //Look Later
+        height: h.value * 100, //Look Later
+        child: Stack(
+          children: [
+            child,
+            Positioned(
+              top: 12, //Look Later
+              right: 8, //Look Later
+              left: 8, //Look Later
+              child: Obx(
+                () => AnimatedOpacity(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                    opacity: stayFocused.value ? 1 : 0,
+                    child: mode.value != 0 ? topBar() : const SizedBox()),
+              ),
+            ),
+          ],
         ),
       ),
-    ));
+    );
   }
 }
-
-Obx topBar() => Obx(() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.help,
-                size: 21,
-              ),
-              Text(' help', style: appTextStyle.value),
-            ],
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.arrow_back_ios,
-                size: 21,
-              ),
-              SvgPicture.asset(
-                'assets/q.svg',
-                width: 24,
-                height: 24,
-                color: Get.isDarkMode ? Colors.white : Colors.black,
-              ),
-              SizedBox(
-                height: 24,
-                width: 90,
-                child: CarouselSlider(
-                    items: modeTypes.entries.map((e) {
-                      return Text(
-                        '${e.value.toString().toUpperCase()}',
-                        style: appTextStyle.value,
-                      );
-                    }).toList(),
-                    disableGesture: true,
-                    carouselController: myCarousel,
-                    options: CarouselOptions(
-                      scrollDirection: Axis.horizontal,
-                      padEnds: true,
-                      enlargeCenterPage: true,
-                      enlargeFactor: 14,
-                    )),
-              ),
-              SvgPicture.asset(
-                'assets/e.svg',
-                width: 24,
-                height: 24,
-                color: Get.isDarkMode ? Colors.white : Colors.black,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 5.0),
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  size: 21,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.edit_note_outlined,
-                size: 21,
-              ),
-              Text(' Edit', style: appTextStyle.value),
-            ],
-          ),
-        ],
-      );
-    });

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
+import 'package:lyrxer/states/color.dart';
 
 //
 //
 //
 // --------- Mouse and Focus --------- //
 
-RxBool hover = false.obs;
 RxBool stayFocused = true.obs;
 int saveLastMode = 0;
 
@@ -22,20 +22,43 @@ void switchFocus() {
   }
 }
 
-class MouseCatcher extends StatelessWidget {
+class FocusOutline extends StatelessWidget {
   final Widget child;
+  final double width;
+  final double height;
 
-  const MouseCatcher({super.key, required this.child});
+  const FocusOutline({
+    super.key,
+    required this.child,
+    required this.width,
+    required this.height,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onDoubleTap: () => switchFocus(),
-        child: MouseRegion(
-            child: child,
-            onEnter: (_) => hover.value = true,
-            onExit: (_) => hover.value = false),
+    RxBool hover = false.obs;
+    return GestureDetector(
+      onDoubleTap: () => switchFocus(),
+      child: MouseRegion(
+        onEnter: (_) => hover.value = true,
+        onExit: (_) => hover.value = false,
+        child: Obx(
+          () => AnimatedContainer(
+              duration: 300.milliseconds,
+              curve: Curves.easeOut,
+              decoration: BoxDecoration(
+                  color: stayFocused.value
+                      ? Color(backgroundColor.value)
+                      : Colors.transparent,
+                  border: Border.all(
+                    color: hover.value
+                        ? Color(subcolor.value)
+                        : Colors.transparent,
+                  )),
+              height: height,
+              width: width,
+              child: child),
+        ),
       ),
     );
   }

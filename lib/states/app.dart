@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screen_retriever/screen_retriever.dart';
 import 'package:window_manager/window_manager.dart';
 
 // --------- AppState --------- //
-
+Display device = Display(id: 0, size: const Size(100, 100));
 RxBool isReady = false.obs;
 RxBool transition = false.obs;
 Duration pageTransition = 400.milliseconds;
@@ -53,6 +54,12 @@ void cycleMode(int direction) async {
     mode.value = modeTypes.length + 1;
   }
   mode.value += direction;
+
+  if (mode.value != 1) {
+    await windowManager
+        .setSize(Size(w.value * 100, h.value * 100)); //Look Later
+  }
+
   myCarousel.animateToPage(mode.value - 1,
       curve: Curves.elasticOut, duration: 700.milliseconds);
   MapEntry a = modeTypes.entries.firstWhere((e) => e.key == mode.value);

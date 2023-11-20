@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
+import 'package:lyrxer/states/focus.dart';
 import 'package:lyrxer/states/text.dart';
 import 'package:lyrxer/states/file_watcher.dart';
 import 'package:screen_retriever/screen_retriever.dart';
@@ -47,42 +48,47 @@ class _lyrxerState extends State<lyrxer> with WindowListener {
     inTransition();
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Obx(() {
-          List<String> lines = getLines(hey.value, constraints);
-          return AnimatedOpacity(
-            duration: pageTransition,
-            opacity: transition.isTrue ? 1 : 0,
-            child: SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: lines.asMap().entries.map((e) {
-                    return AnimatedAlign(
-                      curve: Curves.elasticOut,
-                      alignment: textAlign.value,
-                      duration: const Duration(milliseconds: 1400),
-                      child: AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOut,
-                        style: textStyle.value,
-                        child: TextAnimator(
-                          e.value,
-                          initialDelay: const Duration(milliseconds: 0),
-                          spaceDelay: const Duration(milliseconds: 0),
-                          characterDelay: const Duration(milliseconds: 8),
-                          incomingEffect:
-                              WidgetTransitionEffects.incomingScaleUp(
-                                  duration: const Duration(milliseconds: 100)),
-                          outgoingEffect:
-                              WidgetTransitionEffects.outgoingScaleUp(),
+        return FocusOutline(
+          width: size.value.width,
+          height: size.value.height,
+          child: Obx(() {
+            List<String> lines = getLines(hey.value, constraints);
+            return AnimatedOpacity(
+              duration: pageTransition,
+              opacity: transition.isTrue ? 1 : 0,
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: lines.asMap().entries.map((e) {
+                      return AnimatedAlign(
+                        curve: Curves.fastOutSlowIn,
+                        alignment: textAlign.value,
+                        duration: const Duration(milliseconds: 300),
+                        child: AnimatedDefaultTextStyle(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.fastOutSlowIn,
+                          style: textStyle.value,
+                          child: TextAnimator(
+                            e.value,
+                            initialDelay: const Duration(milliseconds: 0),
+                            spaceDelay: const Duration(milliseconds: 0),
+                            characterDelay: const Duration(milliseconds: 8),
+                            incomingEffect:
+                                WidgetTransitionEffects.incomingScaleUp(
+                                    duration:
+                                        const Duration(milliseconds: 100)),
+                            outgoingEffect:
+                                WidgetTransitionEffects.outgoingScaleUp(),
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList()),
-            ),
-          );
-        });
+                      );
+                    }).toList()),
+              ),
+            );
+          }),
+        );
       },
     );
   }
