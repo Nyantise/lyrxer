@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/color.dart';
+import 'package:window_manager/window_manager.dart';
 
 //
 //
@@ -18,6 +19,9 @@ void switchFocus() {
     goTo('Display');
   } else {
     MapEntry a = modeTypes.entries.firstWhere((e) => e.key == saveLastMode);
+    if (saveLastMode != 1) {
+      windowManager.setSize(device.size);
+    }
     goTo(a.value);
   }
 }

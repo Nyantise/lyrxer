@@ -4,13 +4,28 @@ import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/color.dart';
 import 'package:lyrxer/states/config.dart';
+import 'package:lyrxer/states/focus.dart';
 import 'package:lyrxer/states/text.dart';
 
 //Register all Keys
 registerKeys() async {
   // directional
-  await simpleKey(KeyCode.keyW, () => changeSize(2));
-  await simpleKey(KeyCode.keyS, () => changeSize(-2));
+  await simpleKey(KeyCode.keyW, () {
+    if (mode.value == 1) {
+      changeSize(2);
+    }
+    if (mode.value == 3) {
+      cycleFont(1);
+    }
+  });
+  await simpleKey(KeyCode.keyS, () {
+    if (mode.value == 1) {
+      changeSize(-2);
+    }
+    if (mode.value == 3) {
+      cycleFont(-1);
+    }
+  });
   await simpleKey(KeyCode.keyA, () {
     if (mode.value == 1) {
       changeAlign(-1);
@@ -29,8 +44,18 @@ registerKeys() async {
   });
 
   // non-combinations
-  await simpleKey(KeyCode.keyE, () => cycleMode(1));
-  await simpleKey(KeyCode.keyQ, () => cycleMode(-1));
+  await simpleKey(KeyCode.keyE, () {
+    if (mode.value == 1 && stayFocused.isFalse) {
+      return;
+    }
+    cycleMode(1);
+  });
+  await simpleKey(KeyCode.keyQ, () {
+    if (mode.value == 1 && stayFocused.isFalse) {
+      return;
+    }
+    cycleMode(-1);
+  });
   // await simpleKey(KeyCode.keyT, () => goTo('lyrics'));
   // await simpleKey(KeyCode.keyC, () => goTo('color'));
   // await simpleKey(KeyCode.keyF, () => goTo('font'));

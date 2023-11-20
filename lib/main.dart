@@ -34,7 +34,6 @@ Future<void> main() async {
   runApp(const MyApp());
 
   await getConfig();
-  Future.delayed(5000.milliseconds);
 
   device = await screenRetriever.getPrimaryDisplay();
   h.value = device.size.height / 100; //Look Later
@@ -107,7 +106,7 @@ class GlobalWindow extends StatelessWidget {
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeIn,
                     opacity: stayFocused.value ? 1 : 0,
-                    child: mode.value != 0 ? topBar() : const SizedBox()),
+                    child: mode.value != 0 ? const TopBar() : const SizedBox()),
               ),
             ),
           ],

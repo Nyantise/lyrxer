@@ -14,26 +14,27 @@ class Visualizers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        right: 8,
-        top: 72,
-        bottom: 10,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SizedBox(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Visualizer1(
-                    height: constraints.maxHeight / 2 - 4,
-                  ),
-                  Visualizer2(
-                    height: constraints.maxHeight / 2 - 4,
-                  ),
-                ],
-              ),
-            );
-          },
-        ));
+      top: 72,
+      right: 8,
+      bottom: 10,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Visualizer1(
+                  height: constraints.maxHeight / 2 - 4,
+                ),
+                Visualizer2(
+                  height: constraints.maxHeight / 2 - 4,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -43,12 +44,14 @@ class Visualizer1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     inTransition();
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Color(subcolor.value), width: 1)),
-      height: height,
-      width: device.size.width / 100 * 56,
-      child: visualizerBody,
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Color(subcolor.value), width: 1)),
+        height: height,
+        width: device.size.width / 100 * 56,
+        child: visualizerBody,
+      ),
     );
   }
 }

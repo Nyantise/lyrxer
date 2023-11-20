@@ -8,7 +8,17 @@ import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/color.dart';
 import 'package:lyrxer/states/text.dart';
 
-Obx topBar() => Obx(() {
+class TopBar extends StatefulWidget {
+  const TopBar({super.key});
+
+  @override
+  State<TopBar> createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
       return Container(
         color:
             mode.value == 1 ? Colors.transparent : Color(backgroundColor.value),
@@ -36,7 +46,9 @@ Obx topBar() => Obx(() {
                     'assets/q.svg',
                     width: 24,
                     height: 24,
-                    color: Get.isDarkMode ? Colors.white : Colors.black,
+                    colorFilter: ColorFilter.mode(
+                        Get.isDarkMode ? Colors.white : Colors.black,
+                        BlendMode.srcIn),
                   ),
                   SizedBox(
                     height: 24,
@@ -61,7 +73,9 @@ Obx topBar() => Obx(() {
                     'assets/e.svg',
                     width: 24,
                     height: 24,
-                    color: Get.isDarkMode ? Colors.white : Colors.black,
+                    colorFilter: ColorFilter.mode(
+                        Get.isDarkMode ? Colors.white : Colors.black,
+                        BlendMode.srcIn),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(left: 5.0),
@@ -86,3 +100,5 @@ Obx topBar() => Obx(() {
         ),
       );
     });
+  }
+}

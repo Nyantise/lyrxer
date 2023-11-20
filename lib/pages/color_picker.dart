@@ -1,22 +1,21 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lyrxer/pages/visualizer.dart';
+import 'package:lyrxer/components/visualizer.dart';
 import 'package:lyrxer/states/app.dart';
 import 'package:lyrxer/states/color.dart';
 import 'package:lyrxer/states/focus.dart';
 import 'package:lyrxer/states/text.dart';
-import 'package:screen_retriever/screen_retriever.dart';
-import 'package:window_manager/window_manager.dart';
 
 class ColorPage extends StatelessWidget {
   const ColorPage({super.key});
   @override
   Widget build(BuildContext context) {
-    // setWindow();
     inTransition();
     return const Stack(
       children: [
@@ -37,7 +36,6 @@ class MyColorPicker extends StatelessWidget {
   const MyColorPicker({super.key});
   @override
   Widget build(BuildContext context) {
-    // setWindow();
     inTransition();
     return FocusOutline(
       width: device.size.width / 100 * 42,
@@ -91,7 +89,9 @@ class MyColorPicker extends StatelessWidget {
                       'assets/a.svg',
                       width: 24,
                       height: 24,
-                      color: Get.isDarkMode ? Colors.white : Colors.black,
+                      colorFilter: ColorFilter.mode(
+                          Get.isDarkMode ? Colors.white : Colors.black,
+                          BlendMode.srcIn),
                     ),
                     SizedBox(
                       width: 200,
@@ -117,7 +117,9 @@ class MyColorPicker extends StatelessWidget {
                       'assets/d.svg',
                       width: 24,
                       height: 24,
-                      color: Get.isDarkMode ? Colors.white : Colors.black,
+                      colorFilter: ColorFilter.mode(
+                          Get.isDarkMode ? Colors.white : Colors.black,
+                          BlendMode.srcIn),
                     ),
                     const Padding(
                       padding: EdgeInsets.only(left: 5.0),
@@ -138,17 +140,6 @@ class MyColorPicker extends StatelessWidget {
       ),
     );
   }
-}
-
-void setWindow() async {
-  var device = await screenRetriever.getPrimaryDisplay();
-  Size size = Size(480, device.size.height - 64);
-  await windowManager.setMinimumSize(size);
-  await windowManager.setMaximumSize(size);
-  await windowManager.setSize(size, animate: true);
-
-  // double offY =
-  await windowManager.setPosition(const Offset(32, 32), animate: true);
 }
 
 getColor() {

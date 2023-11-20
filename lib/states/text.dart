@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +23,27 @@ Rx<TextStyle> textStyle =
 Rx<TextStyle> appTextStyle = GoogleFonts.lato(fontSize: 18.0).obs;
 RxDouble textSize = 52.0.obs;
 RxString textFont = 'Josefin Sans'.obs;
+int fontSelected = 0;
+
+CarouselController fontCarousel = CarouselController();
+void cycleFont(int direction) {
+  if (direction != 1 && direction != -1) {
+    return;
+  }
+  if (fontSelected == 0 && direction < 0) {
+    fontSelected = fontList.length + 1;
+  }
+  if (fontSelected == fontList.length && direction > 0) {
+    fontSelected = -1;
+  }
+  fontSelected += direction;
+
+  textStyle.value =
+      GoogleFonts.getFont(fontList[fontSelected], fontSize: textSize.value);
+
+  fontCarousel.animateToPage(fontSelected,
+      curve: Curves.fastEaseInToSlowEaseOut, duration: 700.milliseconds);
+}
 
 void updateTextStyle() {
   textStyle.value = GoogleFonts.getFont(fontList[0],
